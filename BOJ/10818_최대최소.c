@@ -1,7 +1,4 @@
 # include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-
 
 int maxfinder(int a[], int n){
     int max= a[0];
@@ -31,36 +28,17 @@ int main(){
     int size;
     
     scanf("%d\n", &size);
-
-    char str[100];
-    char num[100];
-    int arr[size];
-
-    fgets(str, 900, stdin);
-    int i=0;
-    int o=0;
-    int k=0;
+    int array[size];
     
-    while(str[i] != '\0') {
-        while(str[i]!=' ' && str[i] !='\0') {
-            num[o]=str[i];
-            o++;
-            i++;
-        }
-        //아래는 띄어쓰기
-        i++;
-        o=0;
-        arr[k] = atoi(num);
-        memset(num, 0, 100);
-        k++;
+    for (int i=0;i<size;i++){
+        scanf("%d",&array[i]);
     }
 
-    int max = maxfinder(arr,size);
-    int min = minfinder(arr,size);
+    int max = maxfinder(array,size);
+    int min = minfinder(array,size);
 
     printf("%d %d\n", max, min);
 
     return 0;
 
 }
-
