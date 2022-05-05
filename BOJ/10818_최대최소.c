@@ -1,5 +1,6 @@
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 
 
 int maxfinder(int a[], int n){
@@ -50,6 +51,7 @@ int main(){
         i++;
         o=0;
         arr[k] = atoi(num);
+        memset(num, 0, 100);
         k++;
     }
 
