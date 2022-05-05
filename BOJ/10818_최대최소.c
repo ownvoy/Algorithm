@@ -1,5 +1,6 @@
 # include <stdio.h>
-#include <stdlib.h>
+# include <stdlib.h>
+
 
 int maxfinder(int a[], int n){
     int max= a[0];
@@ -34,10 +35,11 @@ int main(){
     char num[100];
     int arr[size];
 
-    gets(str);
+    fgets(str, 900, stdin);
     int i=0;
     int o=0;
     int k=0;
+    
     while(str[i] != '\0') {
         while(str[i]!=' ' && str[i] !='\0') {
             num[o]=str[i];
