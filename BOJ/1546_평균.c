@@ -17,10 +17,12 @@ double scam_mean(int* array, int Size,int max){
     double scam_score[Size];
     double scam_sum=0;
     
-    for (int i=1; i<Size; i++){
+    for (int i=1; i<=Size; i++){
         scam_score[i] = array[i]/max*100;
+        //printf("%f\n", scam_score[i]);
         scam_sum += scam_score[i];
     }
+
     double mean= scam_sum/ Size;
     return mean;
 }
@@ -37,6 +39,7 @@ int main(){
     }
 
     int max = max_finder(subject_score, size);
+    //printf("%d\n",max);
     double scam = scam_mean(subject_score, size, max);
 
     printf("%f",scam);
