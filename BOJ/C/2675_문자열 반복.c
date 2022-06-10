@@ -2,16 +2,18 @@
 #include <string.h>
 #include <stdlib.h>
 
-typedef struct _test{
+typedef struct _test
+{
     int repeat;
     char string[];
 } test;
 
-int main(){
+int main()
+{
     int testcase;
-    scanf("%d",&testcase);
+    scanf("%d", &testcase);
 
-    for (int i=0; i<testcase; i++)
+    for (int i = 0; i < testcase; i++)
     {
         test ap;
 
@@ -19,8 +21,9 @@ int main(){
         getchar();
         scanf("%s", ap.string);
         int stringlen = strlen(ap.string);
-        if (stringlen > 0){
-            char *newstrptr = (char *)malloc(sizeof(char)*(stringlen+1));
+        if (stringlen > 0)
+        {
+            char *newstrptr = (char *)malloc(sizeof(char) * (stringlen + 1));
             strcpy(newstrptr, ap.string);
 
             for (int j = 0; j < sizeof(newstrptr) / sizeof(char); j++)
@@ -35,7 +38,5 @@ int main(){
         printf("\n");
     }
 
-    
     return 0;
-    
 }

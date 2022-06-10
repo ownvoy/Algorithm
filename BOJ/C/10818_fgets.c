@@ -1,7 +1,8 @@
 #include <stdio.h>
 #define MAX_STR_SIZE 100
 
-int main() {
+int main()
+{
     char str_read[MAX_STR_SIZE];
     fgets(str_read, MAX_STR_SIZE, stdin);
     printf("output: %s \n", str_read);
@@ -11,10 +12,3 @@ int main() {
 
     return 0;
 }
-
-
-
-
-
-
-
