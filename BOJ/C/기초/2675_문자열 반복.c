@@ -18,12 +18,11 @@ int main()
         test ap;
 
         scanf("%d", &ap.repeat);
-        getchar();
         scanf("%s", ap.string);
         int stringlen = strlen(ap.string);
         if (stringlen > 0)
         {
-            char *newstrptr = (char *)malloc(sizeof(char) * (stringlen + 1));
+            char *newstrptr = (char *)malloc(sizeof(char) * (stringlen));
             strcpy(newstrptr, ap.string);
 
             for (int j = 0; j < sizeof(newstrptr) / sizeof(char); j++)
