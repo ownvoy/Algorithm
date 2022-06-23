@@ -3,22 +3,28 @@
 #include <stdlib.h>
 #define N 100000
 
-int size(int stacks_size)
+typedef struct __arrayStack
 {
-    if (stacks_size == 0)
+    int arr[N];
+    int stacks_size;
+} Stack;
+
+int size(Stack *stack)
+{
+    if (stack->stacks_size == 0)
     {
         printf("0\n");
 
         return 0;
     }
-    printf("%d\n", stacks_size);
+    printf("%d\n", stack->stacks_size);
 
     return 0;
 }
 
-int empty(int stacks_size)
+int empty(Stack *stack)
 {
-    if (stacks_size == 0)
+    if (stack->stacks_size == 0)
     {
         printf("1\n");
     }
@@ -28,57 +34,80 @@ int empty(int stacks_size)
     }
 }
 
-int pop(int *arr, int stacks_size)
+int top(Stack *stack)
 {
-    if (stacks_size == 0)
+    if (stack->stacks_size == 0)
     {
         printf("-1\n");
         return 0;
     }
 
-    printf("%d\n", arr[stacks_size - 1]);
+    printf("%d\n", stack->arr[(stack->stacks_size) - 1]);
+}
+
+int pop(Stack *stack)
+{
+    if (stack->stacks_size == 0)
+    {
+        printf("-1\n");
+        return 0;
+    }
+
+    printf("%d\n", stack->arr[(stack->stacks_size) - 1]);
+
+    if (stack->stacks_size != 0)
+    {
+        stack->stacks_size--;
+    }
     return 0;
+}
+
+void init(Stack *stack)
+{
+    stack->stacks_size = 0;
+}
+
+void push(Stack *stack)
+{
+    stack->stacks_size++;
+    scanf("%d", &stack->arr[stack->stacks_size - 1]);
 }
 
 int main()
 {
     int number;
-    int stacks_size = 0;
-    int arr[N];
-    char string[100];
     scanf("%d", &number);
+    Stack stack;
+    init(&stack);
+
+    char string[100];
 
     for (int i = 0; i < number; i++)
     {
         scanf("%s", string);
         if (strcmp(string, "size") == 0)
         {
-            size(stacks_size);
+            size(&stack);
         }
 
         if (strcmp(string, "empty") == 0)
         {
-            empty(stacks_size);
+            empty(&stack);
         }
 
         if (strcmp(string, "push") == 0)
         {
-            stacks_size++;
-            scanf("%d", &arr[stacks_size - 1]);
+            push(&stack);
         }
 
         if (strcmp(string, "pop") == 0)
         {
-            pop(arr, stacks_size);
-            if (stacks_size != 0)
-            {
-                stacks_size--;
-            }
+            pop(&stack);
         }
 
         if (strcmp(string, "top") == 0)
         {
-            pop(arr, stacks_size);
+            top(&stack);
         }
     }
 }
