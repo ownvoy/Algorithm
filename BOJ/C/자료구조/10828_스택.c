@@ -3,11 +3,25 @@
 #include <stdlib.h>
 #define N 100000
 
-typedef struct __arrayStack
-{
-    int arr[N];
+typedef struct __stackNode{
+    int data;
     int stacks_size;
+    struct __stackNode *next;
 } Stack;
+
+
+void init(Stack *stack ){
+    stack -> next = NULL;
+    stack -> stacks_size = 0;
+}
+
+void push(Stack *stack){
+    Stack *newNode = (Stack *)malloc(sizeof(Stack));
+
+    scanf("%d", &newNode->data);
+    stack -> next = newNode;
+
+}
 
 int size(Stack *stack)
 {
@@ -42,7 +56,7 @@ int top(Stack *stack)
         return 0;
     }
 
-    printf("%d\n", stack->arr[(stack->stacks_size) - 1]);
+    printf("%d\n", stack->data);
 }
 
 int pop(Stack *stack)
@@ -53,24 +67,16 @@ int pop(Stack *stack)
         return 0;
     }
 
-    printf("%d\n", stack->arr[(stack->stacks_size) - 1]);
+    printf("%d\n", stack->data);
 
+    int Rdata = stack->data;
+    Stack Rstack = stack->next;
+    
     if (stack->stacks_size != 0)
     {
         stack->stacks_size--;
     }
     return 0;
-}
-
-void init(Stack *stack)
-{
-    stack->stacks_size = 0;
-}
-
-void push(Stack *stack)
-{
-    stack->stacks_size++;
-    scanf("%d", &stack->arr[stack->stacks_size - 1]);
 }
 
 int main()
