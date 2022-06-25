@@ -75,7 +75,7 @@ void empty(Stack *stack)
     }
 }
 
-void top(Stack *stack)
+int top(Stack *stack)
 {
     if (stack->stacks_size == 0)
     {
