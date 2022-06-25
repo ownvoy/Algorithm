@@ -3,24 +3,51 @@
 #include <stdlib.h>
 #define N 100000
 
-typedef struct __stackNode{
+typedef struct __Node
+{
     int data;
+    struct __Node *next;
+} Node;
+
+typedef struct __stack
+{
+    Node *head;
     int stacks_size;
-    struct __stackNode *next;
 } Stack;
 
-
-void init(Stack *stack ){
-    stack -> next = NULL;
-    stack -> stacks_size = 0;
+void init(Stack *stack)
+{
+    stack->head = NULL;
+    stack->stacks_size = 0;
 }
 
-void push(Stack *stack){
-    Stack *newNode = (Stack *)malloc(sizeof(Stack));
+void push(Stack *stack)
+{
+    Node *newnode = (Node *)malloc(sizeof(Node));
 
-    scanf("%d", &newNode->data);
-    stack -> next = newNode;
+    scanf("%d", &newnode->data);
+    newnode->next = stack->head;
+    stack->head = newnode;
+    stack->stacks_size++;
+}
 
+int pop(Stack *stack)
+{
+    if (stack->stacks_size == 0)
+    {
+        printf("-1\n");
+        return 0;
+    }
+
+    printf("%d\n", stack->head->data);
+
+    Node *Rnode = stack->head;
+    int Rdata = Rnode->data;
+    stack->head = Rnode->next;
+    free(Rnode);
+    stack->stacks_size--;
+
+    return 0;
 }
 
 int size(Stack *stack)
@@ -36,7 +63,7 @@ int size(Stack *stack)
     return 0;
 }
 
-int empty(Stack *stack)
+void empty(Stack *stack)
 {
     if (stack->stacks_size == 0)
     {
@@ -48,7 +75,7 @@ int empty(Stack *stack)
     }
 }
 
-int top(Stack *stack)
+void top(Stack *stack)
 {
     if (stack->stacks_size == 0)
     {
@@ -56,27 +83,7 @@ int top(Stack *stack)
         return 0;
     }
 
-    printf("%d\n", stack->data);
-}
-
-int pop(Stack *stack)
-{
-    if (stack->stacks_size == 0)
-    {
-        printf("-1\n");
-        return 0;
-    }
-
-    printf("%d\n", stack->data);
-
-    int Rdata = stack->data;
-    Stack Rstack = stack->next;
-    
-    if (stack->stacks_size != 0)
-    {
-        stack->stacks_size--;
-    }
-    return 0;
+    printf("%d\n", stack->head->data);
 }
 
 int main()
