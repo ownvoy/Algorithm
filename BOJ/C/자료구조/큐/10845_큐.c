@@ -2,18 +2,49 @@
 #include <string.h>
 #include <stdlib.h>
 
+typedef struct _node
+{
+    int data;
+    struct _node *next;
+} Node;
+
 typedef struct _Queue
 {
+    Node *front;
+    Node *back;
     int queue_size;
-    int arr[10000];
 } Queue;
 
-int size(Queue *queue)
+void init(Queue *queue)
+{
+    queue->front = NULL;
+    queue->back = NULL;
+    queue->queue_size = 0;
+}
+
+int push(Queue *queue)
+{
+    Node *newnode = (Node *)malloc(sizeof(Node));
+    scanf("%d", &newnode->data);
+    if (queue->queue_size == 0)
+    {
+        queue->front = newnode;
+        queue->back = newnode;
+        queue->queue_size++;
+
+        return 0;
+    }
+    queue->back->next = newnode;
+    queue->back = newnode;
+    queue->queue_size++;
+}
+
+void size(Queue *queue)
 {
     printf("%d\n", queue->queue_size);
 }
 
-int empty(Queue *queue)
+void empty(Queue *queue)
 {
     if (queue->queue_size == 0)
     {
@@ -34,7 +65,7 @@ int front(Queue *queue)
     }
 
     int front_data;
-    front_data = queue->arr[0];
+    front_data = queue->front->data;
     printf("%d\n", front_data);
 }
 
@@ -47,14 +78,8 @@ int back(Queue *queue)
     }
 
     int back_data;
-    back_data = queue->arr[queue->queue_size - 1];
+    back_data = queue->back->data;
     printf("%d\n", back_data);
-}
-
-int push(Queue *queue)
-{
-    scanf("%d", &queue->arr[queue->queue_size]);
-    queue->queue_size++;
 }
 
 int pop(Queue *queue)
@@ -64,20 +89,11 @@ int pop(Queue *queue)
         printf("-1\n");
         return 0;
     }
-
-    printf("%d\n", queue->arr[0]);
+    Node *Rnode = queue->front;
+    queue->front = queue->front->next;
+    printf("%d\n", Rnode->data);
+    free(Rnode);
     queue->queue_size--;
-
-    for (int i = 0; i < queue->queue_size; i++)
-    {
-        queue->arr[i] = queue->arr[i + 1];
-    }
-}
-
-int init(Queue *queue)
-{
-    queue->queue_size = 0;
-    memset(queue->arr, 0, sizeof(int) * 10000);
 }
 
 int main()
