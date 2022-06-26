@@ -1,29 +1,83 @@
-
 #include <stdio.h>
+#include <stdlib.h>
 
-    int throw(int *arr, int size)
+typedef struct _NODE
+{
+    int data;
+    struct _NODE *next;
+} Node;
+
+typedef struct _Queue
+{
+    Node *front;
+    Node *back;
+    int size;
+} Queue;
+
+int init(Queue *queue)
+{
+    Node *newnode = (Node *)malloc(sizeof(Node));
+    newnode->data = 1;
+    queue->front = newnode;
+    queue->back = newnode;
+    queue->size = 1;
+}
+
+int set(Queue *queue, int size)
+{
+    queue->size = size;
+    for (int i = 2; i <= size; i++)
+    {
+        Node *newnode = (Node *)malloc(sizeof(Node));
+        newnode->data = i;
+        queue->back->next = newnode;
+        queue->back = newnode;
+    }
+}
+
+int pop(Queue *queue)
 {
 
-    while (size >= 4)
+    while (queue->size > 4)
     {
-        arr[size - 2] = arr[1];
-        for (int i = 0; i <= size - 3; i++)
-        {
-            arr[i] = arr[i + 2];
-        }
-        size--;
+        Node *Rnode = (Node *)malloc(sizeof(Node));
+        Node *Mnode = (Node *)malloc(sizeof(Node));
+        Node *Tempnode = (Node *)malloc(sizeof(Node));
+
+        Rnode = queue->front;
+        Mnode = queue->front->next;
+        queue->front = Mnode->next;
+        free(Rnode);
+        Tempnode = Mnode;
+        queue->back->next = Tempnode;
+        queue->back = Tempnode;
+        free(Mnode);
+        queue->size--;
     }
-    printf("%d", arr[1]);
+    if (queue->size == 4)
+    {
+        printf("%d", queue->back->data);
+    }
+    if (queue->size == 3)
+    {
+        printf("%d", queue->front->next->data);
+    }
+    if (queue->size == 2)
+    {
+        printf("%d", queue->back->data);
+    }
+    if (queue->size == 1)
+    {
+        printf("%d", queue->front->data);
+    }
 }
 
 int main()
 {
-    int N;
-    scanf("%d", &N);
-    int arr[N];
-    for (int i = 0; i < N; i++)
-    {
-        arr[i] = i + 1;
-    }
-    throw(arr, N);
+    int number;
+    scanf("%d", &number);
+    Queue queue;
+    init(&queue);
+    set(&queue, number);
+    pop(&queue);
 }
