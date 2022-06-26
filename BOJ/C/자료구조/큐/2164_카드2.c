@@ -41,17 +41,11 @@ int pop(Queue *queue)
     while (queue->size > 4)
     {
         Node *Rnode = (Node *)malloc(sizeof(Node));
-        Node *Mnode = (Node *)malloc(sizeof(Node));
-        Node *Tempnode = (Node *)malloc(sizeof(Node));
-
         Rnode = queue->front;
-        Mnode = queue->front->next;
-        queue->front = Mnode->next;
+        queue->back->next = queue->front->next;
+        queue->back = queue->front->next;
+        queue->front = queue->front->next->next;
         free(Rnode);
-        Tempnode = Mnode;
-        queue->back->next = Tempnode;
-        queue->back = Tempnode;
-        free(Mnode);
         queue->size--;
     }
     if (queue->size == 4)
