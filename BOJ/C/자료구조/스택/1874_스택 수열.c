@@ -7,27 +7,28 @@ typedef struct stack
     int data[100000];
 } Stack;
 
+Stack stack;
 
-void StackInit(Stack *stack)
+void StackInit()
 {
-    stack->top = -1;
+    stack.top = -1;
 }
 
-int StackSize(Stack *stack)
+int StackSize()
 {
-    return (stack->top + 1);
+    return (stack.top + 1);
 }
-void StackPush(Stack *stack, int value)
+void StackPush(int value)
 {
-    stack->top++;
-    stack->data[stack->top] = value;
+    stack.top++;
+    stack.data[stack.top] = value;
 }
-int StackPop(Stack *stack)
+int StackPop()
 {
-    if (stack->top != -1)
+    if (stack.top != -1)
     {
-        int value = stack->data[stack->top];
-        stack->top--;
+        int value = stack.data[stack.top];
+        stack.top--;
 
         return value;
     }
@@ -38,66 +39,42 @@ int StackPop(Stack *stack)
     }
 }
 
-int main(){
+int main()
+{
     int number;
     scanf("%d", &number);
-    Stack stack;
-    StackInit(&stack);
+    StackInit();
 
-    int array[number];
-    int array_count[number];
-    memset(array_count, 0, sizeof(array_count));
-    
+    int target;
+
     char plus_minus[2 * number];
-    int plus_minus_index = 0;
-    int minus_count = 0;
+    int char_index = 0;
+    int plus = 1; //오름차순으로 시작
 
-    for(int i = 0; i < number; i++){ 
-        scanf("%d", &array[i]);
-    }
-    while (minus_count < number)
-    { // minus_count == number면 성공적으로 수행하고 끝남
-        for (int i = 1; i <= array[minus_count]; i++)
+    for (int i = 0; i < number; i++)
+    {
+        scanf("%d", &target);
+        while (target >= plus)
         {
-            if(array_count[i-1] == 0){
-                StackPush(&stack, i);
-                plus_minus[plus_minus_index++] = '+';
-                array_count[i-1]++;//중복방지
-            }
-            else{
-                array_count[i-1]++;
-            }
-
+            StackPush(plus);
+            plus++;
+            plus_minus[char_index++] = '+';
         }
-        if (array_count[array[minus_count] - 1] >= number)
-        {// 5,3,4,1,2 같은 경우 한 바퀴 돌고, minus_count = 1인 상태에서 무한 루프 빠져서 처리해줌
-        // i 대신에 array[minus_count]가 들어 간 것.
-            break;
+        if (target == StackPop())
+        {
+            plus_minus[char_index++] = '-';
         }
 
-        while(stack.data[stack.top] == array[minus_count] ){
-            StackPop(&stack);
-
-            plus_minus[plus_minus_index++] = '-';
-            minus_count++;
-            if(stack.top == -1){
-                break;
-            }
-            
-
-        }
-
-    }
-
-    if(minus_count!=number){
-        printf("NO\n");
-    }
-
-    else{
-        for(int i = 0; i < number*2; i++){
-            printf("%c\n", plus_minus[i]);
+        else
+        {
+            printf("NO");
+            return 0;
         }
     }
 
+    for (int i = 0; i < number * 2; i++)
+    {
+        printf("%c\n", plus_minus[i]);
+    }
     return 0;
 }
