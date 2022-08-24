@@ -5,4 +5,6 @@
 *.exe
 *.bin
 *.md
+*.excalidraw
+
 .cph/
