@@ -7,20 +7,14 @@ class Solution(object):
         :type intervals: List[List[int]]
         :rtype: int
         """
-        result = 1
         endlist = []
 
         intervals.sort(key=lambda x: x[0])
-        tempe = 0
         for interval in intervals:
             start, end = interval
-            if tempe <= start:
-                tempe = end
-                heappush(endlist, tempe)
-            else:
-                result += 1
-                print(interval)
-                heappush(endlist, tempe)
+            if endlist and endlist[0] <= start:
+                heappop(endlist)
                 heappush(endlist, end)
-            tempe = heappop(endlist)
-        return result
+            else:
+                heappush(endlist, end)
+        return len(endlist)
